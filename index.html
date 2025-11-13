@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prijava - Riot Login</title>
+  <link rel="icon" type="image/x-icon" href="slike/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo">
+        <img src="slike/banner.png" alt="Riot Games Logo">
+      </div>
+
+      <h2>Prijava v račun</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <input id="username" type="text" placeholder="Uporabniško ime" required 
+                 oninvalid="this.setCustomValidity('Izpolni polje')" 
+                 oninput="this.setCustomValidity('')">
+        </div>
+        <div class="input-group">
+          <input id="password" type="password" placeholder="Geslo" required 
+                 oninvalid="this.setCustomValidity('Izpolni polje')" 
+                 oninput="this.setCustomValidity('')">
+        </div>
+
+        <div class="options">
+          <label>
+            <input type="checkbox"> Zapomni si me
+          </label>
+          <p class="forgot-password">
+            <a href="pozabljeno.html">Pozabljeno geslo?</a>
+          </p>
+        </div>
+
+        <button type="submit" class="btn">Prijava</button>
+      </form>
+
+      <div class="divider"><span>ali</span></div>
+
+      <div class="social-login">
+        <a href="https://accounts.google.com/signin/v2/usernamerecovery?flowName=GlifWebSignIn&flowEntry=ServiceLogin" 
+           target="_blank" rel="noopener noreferrer">
+          <button class="social-btn google">
+            <i class="fab fa-google"></i> Google
+          </button>
+        </a>
+        <a href="https://www.facebook.com/login.php/" target="_blank" rel="noopener noreferrer">
+          <button class="social-btn facebook">
+            <i class="fab fa-facebook-f"></i> Facebook
+          </button>
+        </a>
+      </div>
+
+      <p class="register-text">
+        Nimaš računa? <a href="register.html">Registriraj se</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Simulacija prijave (primer)
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault(); // prepreči osvežitev strani
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Tu lahko dodaš preverjanje pravega uporabnika/gesla
+      if (username === "admin" && password === "1234") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Prijava uspešna!',
+          text: 'Dobrodošel nazaj, ' + username + '!',
+          confirmButtonColor: '#e53e3e'
+        }).then(() => {
+          // preusmeritev po uspešni prijavi
+          window.location.href = "https://www.riotgames.com/en";
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Napaka pri prijavi',
+          text: 'Napačno uporabniško ime ali geslo!',
+          confirmButtonColor: '#e53e3e'
+        });
+      }
+    });
+  </script>
+</body>
+</html>

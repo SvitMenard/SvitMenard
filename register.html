@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registracija - Riot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="slike/favicon.ico">
+  <!-- ✅ SweetAlert2 CSS in JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo">
+        <img src="slike/banner.png" alt="Riot Logo">
+      </div>
+      <h2>Registracija</h2>
+      <form>
+        <div class="input-group">
+          <input type="text" placeholder="Uporabniško ime" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
+        </div>
+        <div class="input-group">
+          <input type="email" placeholder="Email" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
+        </div>
+        <div class="input-group">
+          <input type="password" placeholder="Geslo" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
+        </div>
+        <div class="input-group">
+          <input type="password" placeholder="Potrdi geslo" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
+        </div>
+        <div class="input-group">
+          <select id="drzava" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
+            <option value="" disabled selected>Izberi državo</option>
+            <option value="Slovenia">Slovenia</option>
+            <option value="Croatia">Croatia</option>
+            <option value="Austria">Austria</option>
+            <option value="Italy">Italy</option>
+            <option value="Germany">Germany</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Registracija</button>
+      </form>
+      <p class="register-text">
+        Imaš že račun? <a href="index.html">Prijava</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    /* VALIDACIJA REGISTRACIJE */
+    (function() {
+      const form = document.querySelector('form');
+      const emailEl = form.querySelector('input[type="email"]');
+      const passwordEls = form.querySelectorAll('input[type="password"]');
+      const passEl = passwordEls[0];
+      const passConfirmEl = passwordEls[1];
+
+      function showError(el, msg) {
+        clearError(el);
+        const div = document.createElement('div');
+        div.className = 'error-msg';
+        div.innerText = msg;
+        el.classList.add('input-error');
+        el.parentNode.appendChild(div);
+      }
+
+      function clearError(el) {
+        el.classList.remove('input-error');
+        const msgs = el.parentNode.querySelectorAll('.error-msg');
+        msgs.forEach(m => m.remove());
+      }
+
+      function validateEmail(value) {
+        if (!value) return { ok: false, msg: 'Email je obvezen.' };
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(value)) return { ok: false, msg: 'Vnesi veljaven email (npr. ime@domena.si).' };
+        return { ok: true };
+      }
+
+      function validatePassword(value) {
+        if (!value) return { ok: false, msg: 'Geslo je obvezno.' };
+        if (value.length < 8 || value.length > 64) return { ok: false, msg: 'Geslo mora biti dolgo med 8 in 64 znaki.' };
+        if (!/[A-Z]/.test(value)) return { ok: false, msg: 'Geslo mora vsebovati vsaj eno veliko črko.' };
+        if (!/[a-z]/.test(value)) return { ok: false, msg: 'Geslo mora vsebovati vsaj eno malo črko.' };
+        if (!/[0-9]/.test(value)) return { ok: false, msg: 'Geslo mora vsebovati vsaj eno številko.' };
+        return { ok: true };
+      }
+
+      function validatePasswordConfirm(pass, confirm) {
+        if (!confirm) return { ok: false, msg: 'Prosim potrdi geslo.' };
+        if (pass !== confirm) return { ok: false, msg: 'Gesli se ne ujemata.' };
+        return { ok: true };
+      }
+
+      [emailEl, passEl, passConfirmEl].forEach(el => {
+        if (!el) return;
+        el.addEventListener('input', () => clearError(el));
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        [emailEl, passEl, passConfirmEl].forEach(el => el && clearError(el));
+
+        const emailVal = emailEl.value.trim();
+        const passVal = passEl.value;
+        const passConfirmVal = passConfirmEl.value;
+
+        const emailCheck = validateEmail(emailVal);
+        if (!emailCheck.ok) {
+          showError(emailEl, emailCheck.msg);
+          emailEl.focus();
+          return;
+        }
+
+        const passCheck = validatePassword(passVal);
+        if (!passCheck.ok) {
+          showError(passEl, passCheck.msg);
+          passEl.focus();
+          return;
+        }
+
+        const confirmCheck = validatePasswordConfirm(passVal, passConfirmVal);
+        if (!confirmCheck.ok) {
+          showError(passConfirmEl, confirmCheck.msg);
+          passConfirmEl.focus();
+          return;
+        }
+
+        // ✅ Če je vse v redu, prikaži SweetAlert
+        Swal.fire({
+          title: 'Registracija uspešna!',
+          text: 'Vaš račun je bil uspešno ustvarjen.',
+          icon: 'success',
+          confirmButtonText: 'V redu',
+          confirmButtonColor: '#ff4655', // Riot rdeča
+          background: '#1f1f1f',
+          color: '#fff'
+        }).then(() => {
+          // Po potrditvi lahko preusmeriš:
+          window.location.href = 'https://www.riotgames.com/';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

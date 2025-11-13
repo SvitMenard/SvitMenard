@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pozabljeno geslo</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="slike/favicon.ico">
+  <!-- Dodaj SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo">
+        <img src="slike/banner.png" alt="Riot Logo">
+      </div>
+
+      <h2>Pozabljeno geslo</h2>
+
+      <form id="forgotPasswordForm">
+        <div class="input-group">
+          <input type="email" id="email" placeholder="Vnesi svoj email" required 
+          oninvalid="this.setCustomValidity('Izpolni polje')" 
+          oninput="this.setCustomValidity('')">
+        </div>
+        <button type="submit" class="btn">Pošlji povezavo</button>
+      </form>
+
+      <p class="register-text">
+        Nazaj na <a href="index.html">prijavo</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('forgotPasswordForm');
+    const emailEl = document.getElementById('email');
+
+    function showError(el, msg) {
+      const existing = el.parentNode.querySelector('.error-msg');
+      if (existing) existing.remove();
+      const div = document.createElement('div');
+      div.className = 'error-msg';
+      div.innerText = msg;
+      el.parentNode.appendChild(div);
+      el.classList.add('input-error');
+    }
+
+    function clearError(el) {
+      el.classList.remove('input-error');
+      const existing = el.parentNode.querySelector('.error-msg');
+      if (existing) existing.remove();
+    }
+
+    emailEl.addEventListener('input', () => clearError(emailEl));
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      clearError(emailEl);
+
+      const emailVal = emailEl.value.trim();
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!re.test(emailVal)){
+        showError(emailEl, 'Vnesi veljaven email.');
+        emailEl.focus();
+        return;
+      }
+
+      // ✅ SweetAlert2 sporočilo namesto alert()
+      Swal.fire({
+        icon: 'success',
+        title: 'Koda za obnovitev gesla poslana!',
+        text: 'Koda za obnovitev gesla je bila poslana na vaš e-mail: ' + emailVal,
+        confirmButtonColor: '#e53e3e'
+      }).then(() => {
+        // po alertu lahko preusmeriš nazaj na prijavo (po želji)
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>
