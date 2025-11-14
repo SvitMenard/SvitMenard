@@ -150,16 +150,21 @@ h2 {
   position: relative;
 }
 
-.toggle-password {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #666;
-  font-size: 18px;
+.password-wrapper input {
+  padding-right: 45px; /* prostor za oko v inputu */
 }
 
-.toggle-password:hover {
-  color: black;
+.password-wrapper i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #ccc;
+  cursor: pointer;
 }
+
+.password-wrapper i:hover {
+  color: white;
+}
+
