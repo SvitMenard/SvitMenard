@@ -23,9 +23,13 @@
         <div class="input-group">
           <input type="email" placeholder="Email" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
         </div>
-        <div class="input-group">
-          <input type="password" placeholder="Geslo" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
-        </div>
+        <div class="input-group password-wrapper">
+  <input id="password" type="password" placeholder="Geslo" required 
+         oninvalid="this.setCustomValidity('Izpolni polje')" 
+         oninput="this.setCustomValidity('')">
+
+  <i class="fa-solid fa-eye" id="togglePassword"></i>
+</div>
         <div class="input-group">
           <input type="password" placeholder="Potrdi geslo" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
         </div>
@@ -48,6 +52,17 @@
   </div>
 
   <script>
+    const togglePassword = document.getElementById('togglePassword');
+const passwordField = document.getElementById('password');
+
+togglePassword.addEventListener('click', () => {
+  const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+  passwordField.setAttribute('type', type);
+
+  togglePassword.classList.toggle('fa-eye');
+  togglePassword.classList.toggle('fa-eye-slash');
+});
+
     /* VALIDACIJA REGISTRACIJE */
     (function() {
       const form = document.querySelector('form');
@@ -146,3 +161,4 @@
   </script>
 </body>
 </html>
+
