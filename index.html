@@ -25,11 +25,12 @@
                  oninvalid="this.setCustomValidity('Izpolni polje')" 
                  oninput="this.setCustomValidity('')">
         </div>
-        <div class="input-group">
-          <input id="password" type="password" placeholder="Geslo" required 
-                 oninvalid="this.setCustomValidity('Izpolni polje')" 
-                 oninput="this.setCustomValidity('')">
-        </div>
+        <div class="input-group password-wrapper">
+  <input id="password" type="password" placeholder="Geslo" required 
+         oninvalid="this.setCustomValidity('Izpolni polje')" 
+         oninput="this.setCustomValidity('')">
+  <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+</div>
 
         <div class="options">
           <label>
@@ -98,3 +99,4 @@
   </script>
 </body>
 </html>
+
