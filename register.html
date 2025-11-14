@@ -31,9 +31,11 @@
 
   <i class="fa-solid fa-eye" id="togglePassword"></i>
 </div>
-        <div class="input-group">
-          <input type="password" placeholder="Potrdi geslo" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
-        </div>
+        <div class="input-group password-wrapper">
+  <input id="passwordConfirm" type="password" placeholder="Potrdi geslo" required>
+  <i class="fa-solid fa-eye" id="togglePasswordConfirm"></i>
+</div>
+
         <div class="input-group">
           <select id="drzava" required oninvalid="this.setCustomValidity('Izpolni polje')" oninput="this.setCustomValidity('')">
             <option value="" disabled selected>Izberi državo</option>
@@ -53,16 +55,17 @@
   </div>
 
   <script>
-    const togglePassword = document.getElementById('togglePassword');
-const passwordField = document.getElementById('password');
+    const togglePasswordConfirm = document.getElementById('togglePasswordConfirm');
+const passwordConfirmField = document.getElementById('passwordConfirm');
 
-togglePassword.addEventListener('click', () => {
-  const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-  passwordField.setAttribute('type', type);
+togglePasswordConfirm.addEventListener('click', () => {
+  const type = passwordConfirmField.getAttribute('type') === 'password' ? 'text' : 'password';
+  passwordConfirmField.setAttribute('type', type);
 
-  togglePassword.classList.toggle('fa-eye');
-  togglePassword.classList.toggle('fa-eye-slash');
+  togglePasswordConfirm.classList.toggle('fa-eye');
+  togglePasswordConfirm.classList.toggle('fa-eye-slash');
 });
+
 
     /* VALIDACIJA REGISTRACIJE */
     (function() {
@@ -162,5 +165,6 @@ togglePassword.addEventListener('click', () => {
   </script>
 </body>
 </html>
+
 
 
